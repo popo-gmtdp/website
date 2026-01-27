@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>popo Inc. | 科學，快！更快！</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        /* 階級特殊樣式 */
+        .rank-0 {
+            border: 2px solid rgba(234, 179, 8, 0.5) !important;
+            box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+        }
+        
+        .rank-0 i { color: #eab308; }
+
+        .tier-label {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 2px 12px;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .speed-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.5), transparent);
+            height: 1px;
+            width: 100%;
+            animation: speed-move 3s linear infinite;
+        }
+
+        @keyframes speed-move {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .tier-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            margin: 3rem 0;
+        }
+
+        .countdown-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100">
+
+    <!-- 導覽列 -->
+    <nav class="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter text-sky-400">
+                POPO <span class="text-white">INC.</span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="#about" class="hover:text-sky-400 transition">關於我們</a>
+                <a href="#team" class="hover:text-sky-400 transition">領導團隊</a>
+                <a href="#benefits" class="hover:text-sky-400 transition">核心價值</a>
+                <a href="#join" class="bg-sky-500 hover:bg-sky-400 px-4 py-2 rounded-full text-white text-sm transition">立即加入</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄區塊 -->
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden hero-gradient">
+        <div class="speed-line top-1/4 opacity-20"></div>
+        <div class="speed-line top-1/2 opacity-10" style="animation-delay: 1s;"></div>
+        <div class="speed-line top-3/4 opacity-30" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 text-center px-6">
+            <h2 class="text-sky-400 font-bold tracking-widest mb-4 animate-pulse uppercase">Mission: Scientific Miracle</h2>
+            <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight">
+                與我們一起創造<br><span class="text-sky-400 text-glow">科學奇蹟</span>
+            </h1>
+            
+            <!-- 倒數計時器 -->
+            <div class="mb-10 max-w-3xl mx-auto">
+                <p class="text-slate-400 mb-4 text-sm font-bold tracking-[0.2em] uppercase">距離科展電子檔繳件還剩下</p>
+                <div id="countdown" class="flex justify-center gap-4 md:gap-8">
+                    <div class="flex flex-col items-center">
+                        <div class="countdown-box w-16 h-16 md:w-24 md:h-24 rounded-xl flex items-center justify-center text-2xl md:text-4xl font-black text-sky-400 mb-2" id="days">00</div>
+                        <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-widest font-bold">Days</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="countdown-box w-16 h-16 md:w-24 md:h-24 rounded-xl flex items-center justify-center text-2xl md:text-4xl font-black text-sky-400 mb-2" id="hours">00</div>
+                        <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-widest font-bold">Hours</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="countdown-box w-16 h-16 md:w-24 md:h-24 rounded-xl flex items-center justify-center text-2xl md:text-4xl font-black text-sky-400 mb-2" id="minutes">00</div>
+                        <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-widest font-bold">Minutes</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="countdown-box w-16 h-16 md:w-24 md:h-24 rounded-xl flex items-center justify-center text-2xl md:text-4xl font-black text-pink-500 mb-2" id="seconds">00</div>
+                        <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-widest font-bold text-pink-500/80">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10">
+                夢想在最短的時間內完成突破性的科學作品？<br>在 popo Inc.，這不只是夢想，而是我們的日常！
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="mailto:grassreedu@googlegroups.com" class="px-10 py-4 bg-sky-500 hover:bg-sky-400 rounded-lg text-lg font-bold transition-all transform hover:scale-105 shadow-lg shadow-sky-500/25">
+                    立即參與
+                </a>
+                <a href="#team" class="px-10 py-4 border border-white/20 hover:bg-white/10 rounded-lg text-lg font-bold transition">
+                    查看領導團隊
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 領導團隊 -->
+    <section id="team" class="py-24 px-6 bg-slate-900 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 text-glow">核心領導團隊</h2>
+                <p class="text-slate-400 uppercase tracking-widest text-xs">Structural Hierarchy & Leadership</p>
+            </div>
+            
+            <!-- Tier 0: 榮譽董事長 -->
+            <div class="flex justify-center mb-16">
+                <div class="glass-card rank-0 p-8 rounded-3xl text-center w-full max-w-sm relative">
+                    <div class="tier-label bg-yellow-500 text-slate-900">LV.0 ELITE</div>
+                    <div class="w-24 h-24 bg-yellow-500/20 rounded-full mx-auto mb-4 flex items-center justify-center border border-yellow-500/50">
+                        <i class="fas fa-crown text-4xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-black mb-1">草莓</h3>
+                    <p class="text-sky-400 text-lg mb-2">創辦榮譽董事長</p>
+                    <p class="text-slate-500 text-sm italic">團隊精神領袖</p>
+                </div>
+            </div>
+
+            <div class="tier-divider"></div>
+
+            <!-- Tier 1: CEO -->
+            <div class="flex justify-center mb-16">
+                <div class="glass-card p-8 rounded-2xl text-center w-full max-w-xs border-sky-500/30 relative">
+                    <div class="tier-label bg-sky-500 text-white">LV.1 COMMAND</div>
+                    <div class="w-20 h-20 bg-sky-500/20 rounded-full mx-auto mb-4 flex items-center justify-center text-sky-400">
+                        <i class="fas fa-chess-king text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">草草</h3>
+                    <p class="text-white text-sm mb-2 font-bold">執行長 (CEO)</p>
+                    <p class="text-slate-500 text-xs">掌管整體方向</p>
+                </div>
+            </div>
+
+            <div class="tier-divider"></div>
+
+            <!-- Tier 2: COO -->
+            <div class="text-center mb-8">
+                <span class="text-emerald-500 text-xs font-bold tracking-[0.3em] uppercase">Level 2 Operational Control</span>
+            </div>
+            <div class="flex justify-center mb-16">
+                <div class="glass-card p-6 rounded-2xl text-center w-full max-w-[280px] border-emerald-500/20 relative">
+                    <div class="tier-label bg-emerald-500 text-white">LV.2</div>
+                    <div class="w-16 h-16 bg-emerald-500/20 rounded-full mx-auto mb-4 flex items-center justify-center text-emerald-400">
+                        <i class="fas fa-chess-queen text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">鼠鼠</h3>
+                    <p class="text-white text-sm mb-1 font-bold">營運長 (COO)</p>
+                    <p class="text-slate-500 text-xs italic">策略落地推手</p>
+                </div>
+            </div>
+
+            <div class="tier-divider"></div>
+
+            <!-- Tier 3: General Manager -->
+            <div class="text-center mb-8">
+                <span class="text-purple-500 text-xs font-bold tracking-[0.3em] uppercase">Level 3 General Coordination</span>
+            </div>
+            <div class="flex justify-center mb-16">
+                <div class="glass-card p-6 rounded-2xl text-center w-full max-w-[280px] border-purple-500/20 relative">
+                    <div class="tier-label bg-purple-500 text-white">LV.3</div>
+                    <div class="w-16 h-16 bg-purple-500/20 rounded-full mx-auto mb-4 flex items-center justify-center text-purple-400">
+                        <i class="fas fa-chess-rook text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">老大</h3>
+                    <p class="text-white text-sm mb-1 font-bold">總經理</p>
+                    <p class="text-slate-500 text-xs italic">跨部門協調高手</p>
+                </div>
+            </div>
+
+            <div class="tier-divider"></div>
+
+            <!-- Tier 4: Strategic Directors -->
+            <div class="text-center mb-8">
+                <span class="text-orange-500 text-xs font-bold tracking-[0.3em] uppercase">Level 4 Strategic Planning</span>
+            </div>
+            <div class="flex justify-center gap-8 flex-wrap mb-16">
+                <div class="glass-card p-6 rounded-xl text-center w-56 border-orange-500/20 relative">
+                    <div class="tier-label bg-orange-500 text-white">LV.4</div>
+                    <div class="text-orange-400 mb-3"><i class="fas fa-bullhorn text-2xl"></i></div>
+                    <h4 class="font-bold text-base">鴨子</h4>
+                    <p class="text-xs text-sky-400 font-medium">市場總監</p>
+                    <p class="mt-2 text-[10px] text-slate-500">品牌推廣與市場策略專家</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center w-56 border-green-500/20 relative">
+                    <div class="tier-label bg-green-500 text-white">LV.4</div>
+                    <div class="text-green-400 mb-3"><i class="fas fa-vial text-2xl"></i></div>
+                    <h4 class="font-bold text-base">黃瓜</h4>
+                    <p class="text-xs text-sky-400 font-medium">產品總監</p>
+                    <p class="mt-2 text-[10px] text-slate-500">研發與產品管理核心</p>
+                </div>
+            </div>
+
+            <div class="tier-divider"></div>
+
+            <!-- Tier 5: Executive Directors -->
+            <div class="text-center mb-8">
+                <span class="text-slate-400 text-xs font-bold tracking-[0.3em] uppercase">Level 5 Executive Operations</span>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-xl text-center relative border-white/5">
+                    <div class="tier-label bg-slate-700 text-white">LV.5</div>
+                    <div class="text-red-400 mb-3"><i class="fas fa-user-friends text-xl"></i></div>
+                    <h4 class="font-bold text-sm">土撥鼠</h4>
+                    <p class="text-xs text-sky-400">人力資源總監</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center relative border-white/5">
+                    <div class="tier-label bg-slate-700 text-white">LV.5</div>
+                    <div class="text-yellow-400 mb-3"><i class="fas fa-chart-line text-xl"></i></div>
+                    <h4 class="font-bold text-sm">比目魚</h4>
+                    <p class="text-xs text-sky-400">財務總監</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center relative border-white/5">
+                    <div class="tier-label bg-slate-700 text-white">LV.5</div>
+                    <div class="text-blue-400 mb-3"><i class="fas fa-microchip text-xl"></i></div>
+                    <h4 class="font-bold text-sm">小銅</h4>
+                    <p class="text-xs text-sky-400">技術總監</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center relative border-white/5">
+                    <div class="tier-label bg-slate-700 text-white">LV.5</div>
+                    <div class="text-indigo-400 mb-3"><i class="fas fa-lightbulb text-xl"></i></div>
+                    <h4 class="font-bold text-sm">奶龍</h4>
+                    <p class="text-xs text-sky-400">創意總監</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 關於我們 & 底部 -->
+    <section id="about" class="py-24 px-6 bg-slate-950">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="flex-1">
+                <div class="w-16 h-1 bg-sky-500 mb-6"></div>
+                <h2 class="text-4xl font-bold mb-6 text-glow">關於 popo Inc.</h2>
+                <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                    我們是致力於快速完成科學作品的社團法人。在我們的體系中，層級分明、各司其職，確保每一項靈感都能以最高效率轉化為現實。
+                </p>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="p-4 border-l-2 border-sky-500 bg-white/5">
+                        <div class="text-3xl font-bold text-white">100%</div>
+                        <div class="text-sm text-slate-500 uppercase tracking-widest">創新效率</div>
+                    </div>
+                    <div class="p-4 border-l-2 border-sky-500 bg-white/5">
+                        <div class="text-3xl font-bold text-white">TOP</div>
+                        <div class="text-sm text-slate-500 uppercase tracking-widest">科學品質</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 px-6 bg-slate-950 border-t border-white/5 text-center">
+        <div class="text-xl font-black text-sky-400 mb-2">POPO INC.</div>
+        <p class="text-slate-500 text-[10px] mb-4 tracking-widest">科學 · 速度 · 傳奇</p>
+        <div class="text-slate-600 text-[10px]">© 2025 popo Inc. Corporate Structure.</div>
+    </footer>
+
+    <script>
+        // 設定目標時間: 2026-02-26 13:00 (UTC+8)
+        // JavaScript Date 使用系統時區，這裡建立一個 UTC+8 的時間戳
+        const targetDate = new Date("2026-02-26T13:00:00+08:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='text-sky-400 text-2xl font-black animate-bounce'>突破進行中！MIRACLE IN PROGRESS</div>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+        }
+
+        // 每秒更新一次
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // 初始調用
+    </script>
+
+</body>
+</html>
