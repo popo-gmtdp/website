@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel 函數達人工具箱</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .excel-grid { background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 100px 30px; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <nav class="bg-green-700 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-file-excel text-2xl"></i>
+                <span class="text-xl font-bold tracking-tight">Excel 函數達人工具箱</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <button onclick="switchTab('dollar')" class="hover:text-green-200 transition">錢字號 $ 教學</button>
+                <button onclick="switchTab('functions')" class="hover:text-green-200 transition">實用函數庫</button>
+                <button onclick="switchTab('generator')" class="hover:text-green-200 transition bg-white text-green-700 px-4 py-1 rounded-full font-medium">公式產生器</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        
+        <!-- Tab 1: $ Sign Teaching -->
+        <section id="dollar" class="tab-content active space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                <h2 class="text-3xl font-bold text-green-800 mb-6 flex items-center">
+                    <i class="fas fa-thumbtack mr-3"></i> 關鍵觀念：錢字號 $ (絕對參照)
+                </h2>
+                <p class="text-lg text-gray-600 mb-8">在 Excel 中，<span class="font-bold text-red-500">$</span> 就像是一根「圖釘」，它的作用是固定儲存格的位置，防止你在拖曳公式時參照跑掉。</p>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="p-5 border-2 border-gray-100 rounded-xl hover:border-green-500 transition">
+                        <div class="text-2xl font-mono font-bold text-blue-600 mb-2">A1</div>
+                        <p class="text-sm font-bold text-gray-500 mb-2 underline decoration-green-400">相對參照</p>
+                        <p class="text-gray-600">完全不固定。往下拉變 A2，往右拉變 B1。</p>
+                    </div>
+                    <div class="p-5 border-2 border-gray-100 rounded-xl hover:border-green-500 transition">
+                        <div class="text-2xl font-mono font-bold text-blue-600 mb-2">$A1</div>
+                        <p class="text-sm font-bold text-gray-500 mb-2 underline decoration-green-400">固定「欄」</p>
+                        <p class="text-gray-600">不管往右怎麼拉，永遠鎖定在 A 欄，但列會隨之下滑。</p>
+                    </div>
+                    <div class="p-5 border-2 border-gray-100 rounded-xl hover:border-green-500 transition">
+                        <div class="text-2xl font-mono font-bold text-blue-600 mb-2">A$1</div>
+                        <p class="text-sm font-bold text-gray-500 mb-2 underline decoration-green-400">固定「列」</p>
+                        <p class="text-gray-600">不管往下拉幾格，永遠鎖定在第 1 列，但欄會隨之變動。</p>
+                    </div>
+                    <div class="p-5 border-2 border-gray-100 rounded-xl hover:border-green-500 transition">
+                        <div class="text-2xl font-mono font-bold text-blue-600 mb-2">$A$1</div>
+                        <p class="text-sm font-bold text-gray-500 mb-2 underline decoration-green-400">絕對參照 (全鎖)</p>
+                        <p class="text-gray-600">徹底固定。無論公式拉到哪裡，參照位置永遠是 A1。</p>
+                    </div>
+                </div>
+
+                <div class="mt-10 bg-green-50 p-6 rounded-xl border border-green-100">
+                    <h3 class="font-bold text-green-800 mb-2 italic">📌 小撇步：</h3>
+                    <p class="text-green-700">選取公式中的儲存格代號後，按下鍵盤上的 <kbd class="bg-white border px-2 py-1 rounded shadow-sm font-mono font-bold text-gray-800">F4</kbd> 鍵，可以快速切換這四種模式！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Function Library -->
+        <section id="functions" class="tab-content space-y-6">
+            <h2 class="text-3xl font-bold text-green-800 mb-6">實用函數分類百科</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Data Lookup -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center text-blue-600 mb-4">
+                        <i class="fas fa-search mr-2 text-xl"></i>
+                        <h3 class="text-xl font-bold">資料查找類</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="group border-b pb-4">
+                            <p class="font-mono font-bold text-lg text-green-700">VLOOKUP</p>
+                            <p class="text-sm text-gray-500 mb-2">垂直查找資料，最經典的必學函數。</p>
+                            <code class="block bg-gray-50 p-2 rounded text-sm text-gray-700">=VLOOKUP(關鍵值, 範圍, 欄數, 0)</code>
+                        </div>
+                        <div class="group">
+                            <p class="font-mono font-bold text-lg text-green-700">XLOOKUP</p>
+                            <p class="text-sm text-gray-500 mb-2">新一代神器，解決 VLOOKUP 只能往右找的限制。</p>
+                            <code class="block bg-gray-50 p-2 rounded text-sm text-gray-700">=XLOOKUP(關鍵值, 搜尋區域, 回傳區域)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Processing -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center text-purple-600 mb-4">
+                        <i class="fas fa-font mr-2 text-xl"></i>
+                        <h3 class="text-xl font-bold">文字處理類</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="group border-b pb-4">
+                            <p class="font-mono font-bold text-lg text-green-700">TEXTJOIN</p>
+                            <p class="text-sm text-gray-500 mb-2">將多格文字合併，並可自動忽略空格。</p>
+                            <code class="block bg-gray-50 p-2 rounded text-sm text-gray-700">=TEXTJOIN("分隔符", TRUE, 範圍)</code>
+                        </div>
+                        <div class="group">
+                            <p class="font-mono font-bold text-lg text-green-700">LEFT / RIGHT</p>
+                            <p class="text-sm text-gray-500 mb-2">擷取文字左側或右側數個字元。</p>
+                            <code class="block bg-gray-50 p-2 rounded text-sm text-gray-700">=LEFT(A1, 3) //取前3個字</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logic & Math -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center text-orange-600 mb-4">
+                        <i class="fas fa-calculator mr-2 text-xl"></i>
+                        <h3 class="text-xl font-bold">邏輯計算類</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="group border-b pb-4">
+                            <p class="font-mono font-bold text-lg text-green-700">SUMIFS</p>
+                            <p class="text-sm text-gray-500 mb-2">符合多個條件才進行加總。</p>
+                            <code class="block bg-gray-50 p-2 rounded text-sm text-gray-700">=SUMIFS(加總範圍, 條件範圍1, 條件1, ...)</code>
+                        </div>
+                        <div class="group">
+                            <p class="font-mono font-bold text-lg text-green-700">IFERROR</p>
+                            <p class="text-sm text-gray-500 mb-2">當公式出錯時，顯示一個乾淨的文字（如 0 或空白）。</p>
+                            <code class="block bg-gray-50 p-2 rounded text-sm text-gray-700">=IFERROR(公式, "錯誤時顯示內容")</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Formula Generator -->
+        <section id="generator" class="tab-content space-y-6">
+            <div class="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-green-800">智能公式產生器</h2>
+                    <p class="text-gray-500 mt-2">勾選你的需求，我們為你組合公式</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <h3 class="font-bold text-lg border-b pb-2">1. 選擇你想要做的操作 (複選)</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-green-50 transition">
+                                <input type="checkbox" class="feature-checkbox h-5 w-5 text-green-600" value="lookup">
+                                <span class="ml-3">我要<strong>查找</strong>另一個表的資料</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-green-50 transition">
+                                <input type="checkbox" class="feature-checkbox h-5 w-5 text-green-600" value="combine">
+                                <span class="ml-3">我要<strong>合併</strong>多格文字內容</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-green-50 transition">
+                                <input type="checkbox" class="feature-checkbox h-5 w-5 text-green-600" value="ignore_empty">
+                                <span class="ml-3">我要<strong>忽略</strong>空白格</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-green-50 transition">
+                                <input type="checkbox" class="feature-checkbox h-5 w-5 text-green-600" value="handle_error">
+                                <span class="ml-3">如果出錯，我要讓它<strong>顯示空白</strong></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-200">
+                        <h3 class="font-bold text-lg mb-4">2. 生成建議公式：</h3>
+                        <div id="result-area" class="space-y-4">
+                            <div class="text-gray-400 italic text-center py-10" id="empty-state">
+                                尚未選擇功能...
+                            </div>
+                            <div id="formula-display" class="hidden">
+                                <div class="bg-white p-4 rounded shadow-inner border border-green-200 mb-4">
+                                    <code id="formula-code" class="text-green-800 font-mono font-bold break-all"></code>
+                                </div>
+                                <div id="formula-explainer" class="text-sm text-gray-600 space-y-2">
+                                    <!-- 說明文字將插入此處 -->
+                                </div>
+                                <button onclick="copyToClipboard()" class="mt-4 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition flex items-center justify-center">
+                                    <i class="far fa-copy mr-2"></i> 複製公式
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-20 py-10 bg-gray-800 text-gray-400 text-center">
+        <p>© 2024 Excel 函數達人 | 讓工作效率倍增的秘密武器</p>
+    </footer>
+
+    <script>
+        // 切換分頁邏輯
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            // 更新按鈕樣式 (簡單處理)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 公式產生邏輯
+        const checkboxes = document.querySelectorAll('.feature-checkbox');
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', generateFormula);
+        });
+
+        function generateFormula() {
+            const selected = Array.from(checkboxes).filter(c => c.checked).map(c => c.value);
+            const display = document.getElementById('formula-display');
+            const empty = document.getElementById('empty-state');
+            const codeEl = document.getElementById('formula-code');
+            const explainer = document.getElementById('formula-explainer');
+
+            if (selected.length === 0) {
+                display.classList.add('hidden');
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            display.classList.remove('hidden');
+            empty.classList.add('hidden');
+
+            let formula = "";
+            let explanation = [];
+
+            // 核心邏輯
+            if (selected.includes('lookup')) {
+                formula = "VLOOKUP(A2, Sheet2!$A$1:$B$100, 2, 0)";
+                explanation.push("• <strong>VLOOKUP</strong>: A2 是你要找的人，Sheet2 範圍記得加 $ 固定。");
+            } else if (selected.includes('combine')) {
+                const ignore = selected.includes('ignore_empty') ? "TRUE" : "FALSE";
+                formula = `TEXTJOIN(",", ${ignore}, A2:E2)`;
+                explanation.push(`• <strong>TEXTJOIN</strong>: 使用逗號作為分隔符，${selected.includes('ignore_empty') ? "已開啟" : "未開啟"}忽略空白功能。`);
+            } else if (selected.includes('ignore_empty') && !selected.includes('combine')) {
+                formula = "請勾選合併文字以配合忽略空白功能";
+            }
+
+            // 錯誤處理封裝
+            if (selected.includes('handle_error') && formula.startsWith('=' || 'V' || 'T')) {
+                formula = `IFERROR(${formula.replace('=', '')}, "")`;
+                explanation.push("• <strong>IFERROR</strong>: 已在外層包覆錯誤處理，找不到資料或出錯時會回傳空值。");
+            }
+
+            // 補上等號
+            if (formula && !formula.startsWith('=')) formula = "=" + formula;
+
+            codeEl.innerText = formula;
+            explainer.innerHTML = explanation.join("<br>");
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('formula-code').innerText;
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            const btn = document.querySelector('#formula-display button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check mr-2"></i> 已複製！';
+            setTimeout(() => btn.innerHTML = originalText, 2000);
+        }
+    </script>
+</body>
+</html>
